@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import HomePage from './HomePage';
+import ChatPage from './ChatPage';
+import AboutUsPage from './AboutUsPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Page = {
+    HOME: "home",
+    CHAT: "chat",
+    ABOUT: "about",
+};
+
+const App = () => {
+    const [currentPage, setCurrentPage] = useState(Page.HOME);
+
+    const navigateTo = (page) => {
+        setCurrentPage(page);
+    };
+
+    const renderPage = () => {
+        switch (currentPage) {
+            case Page.CHAT:
+                return <ChatPage />;
+            case Page.ABOUT:
+                return <AboutUsPage navigateTo={navigateTo} />;
+            default:
+                return <HomePage navigateTo={navigateTo} />;
+        }
+    };
+
+    return (
+        <div>
+            {renderPage()}
+        </div>
+    );
+};
 
 export default App;
